@@ -2,6 +2,7 @@ import { Box, Button,TextField,ThemeProvider,Typography, makeStyles} from "@mui/
 import { useState } from "react"
 import CssBaseline from "@mui/material/CssBaseline"
 import { LightTheme } from "./styles/themes"
+import { width } from "@mui/system"
 
 function App() {
   return (
@@ -20,35 +21,54 @@ function App() {
 
     >
       <CssBaseline />
-      <Typography variant="h2" component="h1" textAlign="center" mt={5}>Redux Bank</Typography>
+      <Typography variant="h2"fontWeight="bold" component="h1" textAlign="center" mt={5}>Redux Bank</Typography>
+      
+
+        <Box
+          mt={10}
+          sx={{
+            backgroundColor: "purple",
+            color:'#fff',
+            width:"60%"
+          }}
+        >
+
+          <Typography 
+            variant="h2" 
+            component="h3" 
+            textAlign="center"
+          >
+            0
+          </Typography>
+        </Box>
       
       <Box 
-        marginTop={10}
+        marginTop={5}
         sx={{
-          width:'90%'
+          width:'60%'
         }}
       >
         <TextField 
-          helperText="digite um valor" 
           variant="filled"
           fullWidth
           label="Valor"
-        
+          type={"number"}
         />
         
         <Box 
           display="flex" 
           gap="10px" 
           flexDirection="column" 
+          mt={4}
         >
           <Button variant="contained" color="secondary">Depositar</Button>
           <Button variant="contained" color="secondary" >Sacar</Button>
+          <Button variant="contained" color="secondary" >Falir</Button>
+
         </Box>
       </Box>
 
-      <Typography variant="h1" component="h1" textAlign="center" mt={15}>
-        Valor
-      </Typography>
+     
     </Box>
     </ThemeProvider>
   )
