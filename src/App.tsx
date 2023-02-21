@@ -1,10 +1,21 @@
-import { Box, Button,TextField,ThemeProvider,Typography, makeStyles} from "@mui/material"
-import { useState } from "react"
+import { Box, Button,TextField,ThemeProvider,Typography} from "@mui/material"
 import CssBaseline from "@mui/material/CssBaseline"
 import { LightTheme } from "./styles/themes"
-import { width } from "@mui/system"
+import { actionCreators, reduxHook} from './redux'
+import { useState } from "react"
+import { bindActionCreators } from "redux"
+import { selectBankValue } from "./redux/reducers/bankReducer"
+import { useAppSelector } from "./redux/reduxHook"
 
 function App() {
+  const [moneyValue, setMoneyValue ] = useState(0)
+
+  const dispatch = reduxHook.useAppDispatch()
+  const bankValue = useAppSelector(selectBankValue)
+
+  // vincular os criadores de ação com o dispatch
+  const { depositMoney, withdrawMoney, bankrupt} = bindActionCreators(actionCreators, dispatch)
+
   return (
     <ThemeProvider theme={LightTheme}>
     <Box
@@ -38,7 +49,9 @@ function App() {
             component="h3" 
             textAlign="center"
           >
-            0
+            {
+              bankValue
+            }
           </Typography>
         </Box>
       
@@ -53,6 +66,9 @@ function App() {
           fullWidth
           label="Valor"
           type={"number"}
+          onChange={(ev) => {
+            console.log(moneyValue)
+            setMoneyValue(Number(ev.target.value))}}
         />
         
         <Box 
@@ -61,9 +77,9 @@ function App() {
           flexDirection="column" 
           mt={4}
         >
-          <Button variant="contained" color="secondary">Depositar</Button>
-          <Button variant="contained" color="secondary" >Sacar</Button>
-          <Button variant="contained" color="secondary" >Falir</Button>
+          <Button variant="contained" color="secondary" onClick={() => depositMoney(moneyValue)}>Depositar</Button>
+          <Button variant="contained" color="secondary" onClick={() => withdrawMoney(moneyValue)}>Sacar</Button>
+          <Button variant="contained" color="secondary" onClick={() => bankrupt()}>Falir</Button>
 
         </Box>
       </Box>
