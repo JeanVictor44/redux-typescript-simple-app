@@ -1,6 +1,5 @@
 import { Action } from "../actions/bankActions";
 import { ActionType } from "../action-types";
-import { useAppSelector } from "../reduxHook";
 import { RootState } from "../store";
 
 const initialState = 0;
@@ -10,10 +9,16 @@ export const bankReducer = (state: number = initialState, action: Action) => {
        identificar o tipo exato e as propriedade existentes nele 
     */
     switch(action.type){
-        case ActionType.DEPOSIT: 
-            return state + action.payload
-        case ActionType.WITHDRAW: 
-            return state - action.payload
+        case ActionType.DEPOSIT:     
+            if(Math.abs(action.payload) > 0){
+                return state + Math.abs(action.payload)
+            }
+            return state  
+        case ActionType.WITHDRAW:
+            if(state - Math.abs(action.payload) >= 0){
+                return state - Math.abs(action.payload)
+            }
+            return state
         case ActionType.BANKRUPT:
             return 0
         default: 

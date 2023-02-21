@@ -3,7 +3,7 @@ import { ActionType } from "../action-types"
 import { Action } from "../actions/bankActions"
 
 export const depositMoney = (amount: number) => {
-    return (dispatch: Dispatch<Action>) => { 
+    return (dispatch: Dispatch<Action>) => {
         dispatch({
             type: ActionType.DEPOSIT,
             payload: amount
